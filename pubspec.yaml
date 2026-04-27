@@ -1,0 +1,55 @@
+name: majstor24_app
+description: Majstor24 Flutter Android aplikacija
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.2 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  webview_flutter: ^4.7.0
+  dio: ^5.4.0
+  path_provider: ^2.1.2
+  share_plus: ^7.2.1
+
+  http: ^1.2.1
+  provider: ^6.1.2
+  flutter_secure_storage: ^9.2.4
+  cupertino_icons: ^1.0.8
+
+  app_links: ^6.3.2
+  url_launcher: ^6.2.5
+
+  intl: ^0.19.0
+  shared_preferences: ^2.5.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_native_splash: ^2.4.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/majstor24.png
+    - assets/images/majstor24b.png
+    - assets/images/auth_bg.jpg
+    - assets/images/sigurica.png
+    - assets/images/domax.png
+    - assets/images/predomium.png
+
+# ================= SPLASH CONFIG =================
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/majstor24.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/images/majstor24.png
+    icon_background_color: "#FFFFFF"

@@ -1,39 +1,32 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:majstor24_app/core/network/api_client.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<String> login(String identifier, String password);
+  Future<Map<String, dynamic>> login(
+    String identifier,
+    String password,
+  );
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final http.Client client;
 
-  AuthRemoteDataSourceImpl({required this.client});
+  final ApiClient _api;
+
+  AuthRemoteDataSourceImpl(this._api);
 
   @override
-  Future<String> login(String identifier, String password) async {
-    final response = await client.post(
-      Uri.parse('https://majstor24.ba/api/login.php'),
-      headers: {
-        "Content-Type": "application/json",
-        "X-Client": "mobile",
-      },
-      body: jsonEncode({
+  Future<Map<String, dynamic>> login(
+    String identifier,
+    String password,
+  ) async {
+
+    final res = await _api.post(
+      "login.php",
+      body: {
         "identifier": identifier,
         "password": password,
-      }),
+      },
     );
 
-    if (response.statusCode != 200) {
-      throw Exception("LOGIN_FAILED");
-    }
-
-    final data = jsonDecode(response.body);
-
-    if (data["success"] != true || data["token"] == null) {
-      throw Exception("SESSION_EXPIRED");
-    }
-
-    return data["token"];
+    return res;
   }
 }

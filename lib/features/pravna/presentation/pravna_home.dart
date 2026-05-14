@@ -2,17 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../auth/application/auth_notifier.dart';
-import '../../auth/presentation/auth_landing_page.dart';
-import '../../profile/presentation/profile_page.dart';
-import '../../ticket/presentation/ticket_page.dart';
+import '../../auth/presentation/role_selection_page.dart';
 
-class HomePage extends StatelessWidget {
-  final String role;
+import 'company_profile_page.dart';
+import 'ugovori_page.dart';
+import 'fakture_page.dart';
+import 'naruci_asistenciju_page.dart';
 
-  const HomePage({
-    super.key,
-    this.role = "fizicka",
-  });
+class PravnaHome extends StatelessWidget {
+  const PravnaHome({super.key});
+
+  Future<void> _logout(BuildContext context) async {
+    await context.read<AuthNotifier>().logout();
+
+    if (!context.mounted) return;
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const RoleSelectionPage(),
+      ),
+      (r) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,33 +36,12 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: const Text(
-          "majstor24",
+          "business-majstor24",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.black,
-            ),
-            onPressed: () async {
-              await context.read<AuthNotifier>().logout();
-
-              if (!context.mounted) return;
-
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const AuthLandingPage(),
-                ),
-                (r) => false,
-              );
-            },
-          )
-        ],
       ),
 
       body: Column(
@@ -72,7 +63,7 @@ class HomePage extends StatelessWidget {
                   CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dobrodošli (home_page.dart",
+                  "Dobrodošli",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -81,7 +72,7 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  "Odaberite akciju (home_page.dart",
+                  "Odaberite opciju (pravna_home.dart)",
                   style: TextStyle(
                     color: Colors.white70,
                   ),
@@ -98,23 +89,21 @@ class HomePage extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-
-                // BITNO — sprječava overflow
                 childAspectRatio: 1.15,
 
                 children: [
 
                   dashboardCard(
                     context,
-                    Icons.person_outline,
-                    "Moj profil",
-                    "Pregled podataka",
+                    Icons.business_outlined,
+                    "Profil firme",
+                    "Podaci kompanije",
                     () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              const ProfilePage(),
+                           const CompanyProfilePage(),
                         ),
                       );
                     },
@@ -122,13 +111,16 @@ class HomePage extends StatelessWidget {
 
                   dashboardCard(
                     context,
-                    Icons.workspace_premium_outlined,
-                    "Kupi paket",
-                    "Aktivirajte usluge",
+                    Icons.description_outlined,
+                    "Ugovori",
+                    "Pregled paketa",
                     () {
-                      Navigator.pushNamed(
+                      Navigator.push(
                         context,
-                        '/kupipaket',
+                        MaterialPageRoute(
+                          builder: (_) =>
+                           const UgovoriPage(),
+                        ),
                       );
                     },
                   ),
@@ -137,13 +129,13 @@ class HomePage extends StatelessWidget {
                     context,
                     Icons.build_outlined,
                     "Asistencija",
-                    "Kreirajte zahtjev",
+                    "Kreiraj zahtjev",
                     () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              const TicketPage(),
+                           const NaruciAsistencijuPage(),
                         ),
                       );
                     },
@@ -154,25 +146,11 @@ class HomePage extends StatelessWidget {
                     Icons.logout,
                     "Odjava",
                     "Izlaz iz sistema",
-                    () async {
-                      await context
-                          .read<AuthNotifier>()
-                          .logout();
-
-                      if (!context.mounted) return;
-
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const AuthLandingPage(),
-                        ),
-                        (r) => false,
-                      );
+                    () {
+                      _logout(context);
                     },
                     danger: true,
                   ),
-
                 ],
               ),
             ),
@@ -221,7 +199,7 @@ class HomePage extends StatelessWidget {
                       ),
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height:12),
 
               Text(
                 title,
@@ -236,13 +214,13 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 6),
+              const SizedBox(height:6),
 
               Text(
                 subtitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 11,
+                  fontSize:11,
                   color: Colors.black54,
                 ),
               ),

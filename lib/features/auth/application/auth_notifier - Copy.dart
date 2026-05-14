@@ -39,10 +39,6 @@ class AuthNotifier extends ChangeNotifier {
   String? _contactId;
   String? get contactId => _contactId;
 
-  // 🔥 NOVO
-  String? _accountId;
-  String? get accountId => _accountId;
-
   /*
   =============================
   INIT (TOKEN CHECK)
@@ -60,17 +56,9 @@ class AuthNotifier extends ChangeNotifier {
 
         if (res["success"] == true) {
 
-          final profile = res["profile"] ?? {};
-
-          _contactId = profile["contactid"]?.toString();
-
-          // 🔥 KLJUČNO
-          _accountId =
-              profile["accountid"]?.toString() ??
-              profile["account_id"]?.toString();
+          _contactId = res["profile"]?["contactid"]?.toString();
 
           debugPrint("INIT CONTACT_ID: $_contactId");
-          debugPrint("INIT ACCOUNT_ID: $_accountId");
 
           _state = _state.copyWith(
             isAuthenticated: true,
@@ -116,6 +104,7 @@ class AuthNotifier extends ChangeNotifier {
         throw Exception(res["message"] ?? "LOGIN_FAILED");
       }
 
+      // 🔥 KLJUČNO — SPREMI TOKEN
       final token = res["token"];
 
       if (token == null || token.toString().isEmpty) {
@@ -126,16 +115,11 @@ class AuthNotifier extends ChangeNotifier {
 
       debugPrint("TOKEN SAVED: $token");
 
-      // 🔥 ID-evi
+      // kontakt id
       _contactId = res["contact_id"]?.toString();
-
-      _accountId =
-          res["account_id"]?.toString() ??
-          res["accountid"]?.toString();
 
       debugPrint("LOGIN SUCCESS");
       debugPrint("CONTACT_ID: $_contactId");
-      debugPrint("ACCOUNT_ID: $_accountId");
 
       _state = _state.copyWith(
         isAuthenticated: true,
@@ -172,7 +156,6 @@ class AuthNotifier extends ChangeNotifier {
     await _storage.clearAll();
 
     _contactId = null;
-    _accountId = null;
 
     _state = const AuthState();
 

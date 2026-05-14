@@ -15,6 +15,7 @@ dependencies:
   dio: ^5.4.0
   path_provider: ^2.1.2
   share_plus: ^7.2.1
+  image_picker: ^1.1.2
 
   http: ^1.2.1
   provider: ^6.1.2
@@ -22,10 +23,11 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   app_links: ^6.3.2
-  url_launcher: ^6.2.5
+  url_launcher: ^6.3.2
 
-  intl: ^0.19.0
+  intl: ^0.20.2
   shared_preferences: ^2.5.4
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +40,8 @@ flutter:
 
   assets:
     - assets/images/majstor24.png
+    - assets/images/businessmajstor24.png
+    - assets/images/pozadina.png
     - assets/images/majstor24b.png
     - assets/images/auth_bg.jpg
     - assets/images/sigurica.png

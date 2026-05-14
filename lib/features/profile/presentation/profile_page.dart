@@ -302,7 +302,7 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Moj profil',
+                'Moj profil (profile_page.dart)',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w800,

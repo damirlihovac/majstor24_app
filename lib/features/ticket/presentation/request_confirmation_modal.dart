@@ -103,7 +103,7 @@ Container(
     borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
   ),
   child: const Text(
-    "Potvrdaa zahtjeva",
+    "Potvrda zahtjeva",
     style: TextStyle(
       color: Colors.white,
       fontSize: 16,
